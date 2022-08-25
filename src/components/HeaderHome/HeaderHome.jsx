@@ -25,9 +25,9 @@ export default function HeaderHome(props) {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              Link
-            </a>
+            <NavLink className="nav-link" to="/todo">
+              TodoList
+            </NavLink>
           </li>
           <li className="nav-item dropdown">
             <a

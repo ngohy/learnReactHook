@@ -8,6 +8,7 @@ import { BrowserRouter, Route,Routes } from 'react-router-dom'
 import UseStateDemo from './pages/HooksDemo/UseStateDemo/UseStateDemo';
 import UseEffectDemo from './pages/HooksDemo/UseEffectDemo/UseEffectDemo';
 import UseCallBackDemo from './pages/HooksDemo/UseCallBackDemo/UseCallBackDemo';
+import Todo from './pages/Todo/Todo';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
         <Route path='usestate' element={<UseStateDemo />}></Route>
         <Route path='useeffect' element={<UseEffectDemo />}></Route>
         <Route path='usecallback' element={<UseCallBackDemo />}></Route>
+        <Route path='todo' element={<Todo />}></Route>
       </Route>
     </Routes>
   </BrowserRouter>
