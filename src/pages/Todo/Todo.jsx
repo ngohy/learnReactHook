@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { v4 as uuid } from 'uuid';
+import debounce from 'lodash/debounce';
 
 import AddTodo from './AddTodo'
 import TodoList from './TodoList'
@@ -11,21 +12,20 @@ export default function Todo() {
         'nameTask': '',
         'description': '',
     });
-    const [list, setList] = useState([]);
+    const [listTodo, setListTodo] = useState([]);
 
-    const handleChange = (e) => {
+    const handleChange = useCallback((e) => {
         let { id, value } = e.target;
         const unique_id = uuid().slice(0, 8);
         let todoNew = { ...todo, id: unique_id };
         todoNew[id] = value;
         setTodo(todoNew);
-    }
+    } ,[todo]);
 
-
-    const handleAddTodo = () => {
-        let listNew = [...list];
-        listNew.push(todo);
-        setList(listNew);
+    const handleAddTodo = useCallback(() => {
+        let listTodoNew = [...listTodo];
+        listTodoNew.push(todo);
+        setListTodo(listTodoNew);
         setTodo(
             {
                 id: 1,
@@ -34,16 +34,16 @@ export default function Todo() {
                 'description': '',
             }
         )
-    }
+    }, [todo]);
 
     const handleDeleteTodo = (id) => {
-        let listNew = [...list].filter((item) => item.id !== id);
-        setList(listNew);
-    }
+        let listTodoNew = [...listTodo].filter((item) => item.id !== id);
+        setListTodo(listTodoNew);
+    };
 
     const handleComplete = (id, isChecked) => {
-        let listUpdate = [...list];
-        let todoComplete = listUpdate.find((item) => item.id === id);
+        let listTodoUpdate = [...listTodo];
+        let todoComplete = listTodoUpdate.find((item) => item.id === id);
         if (todoComplete) {
             if (!isChecked) {
                 todoComplete.isChecked = true
@@ -51,9 +51,34 @@ export default function Todo() {
                 todoComplete.isChecked = false;
             }
         }
-        setList(listUpdate)
+
+        setListTodo(listTodoUpdate);
+
+    };
+
+    const saveLocalStorage = () => {
+        let listTodoLocal = JSON.stringify([...listTodo]);
+        localStorage.setItem('listTodoTodo', listTodoLocal);
     }
 
+    const getLocalStorage = () => {
+        if (localStorage.getItem('listTodoTodo')) {
+            let listTodoNew = [...listTodo];
+            listTodoNew = JSON.parse(localStorage.getItem('listTodoTodo'));
+            setListTodo(listTodoNew);
+        }
+    }
+
+    //goi laij 1 lan duy nhat
+    useEffect(() => {
+        getLocalStorage()
+    }, []);
+
+
+    //goi lai khi listTodo thay doi de luu vao LocalStorage
+    useEffect(() => {
+        saveLocalStorage()
+    }, [listTodo]);
 
     return (
         <div className='container pt-2 mt-4' style={{ width: '600px', height: '600px', boxShadow: '0px 2px 5px 0px rgba(0,0,0,0.75)' }}>
@@ -64,7 +89,7 @@ export default function Todo() {
                     handleAddTodo={handleAddTodo}
                 />
                 <TodoList
-                    list={list}
+                    listTodo={listTodo}
                     handleDeleteTodo={handleDeleteTodo}
                     handleComplete={handleComplete}
                 />
