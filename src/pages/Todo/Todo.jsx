@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { v4 as uuid } from 'uuid';
-import debounce from 'lodash/debounce';
 
 import AddTodo from './AddTodo'
 import TodoList from './TodoList'
@@ -13,27 +12,29 @@ export default function Todo() {
         'description': '',
     });
     const [listTodo, setListTodo] = useState([]);
-
+    //useCallback  ham handleChange va handleAddTodo duoc goi khi todo co su thay doi
     const handleChange = useCallback((e) => {
         let { id, value } = e.target;
         const unique_id = uuid().slice(0, 8);
         let todoNew = { ...todo, id: unique_id };
         todoNew[id] = value;
         setTodo(todoNew);
-    } ,[todo]);
+    }, [todo]);
 
     const handleAddTodo = useCallback(() => {
         let listTodoNew = [...listTodo];
-        listTodoNew.push(todo);
-        setListTodo(listTodoNew);
-        setTodo(
-            {
-                id: 1,
-                isChecked: false,
-                'nameTask': '',
-                'description': '',
-            }
-        )
+        if (todo.description !== '' || todo.nameTask !== '') {
+            listTodoNew.push(todo);
+            setListTodo(listTodoNew);
+            setTodo(
+                {
+                    id: 1,
+                    isChecked: false,
+                    'nameTask': '',
+                    'description': '',
+                }
+            )
+        }
     }, [todo]);
 
     const handleDeleteTodo = (id) => {
@@ -58,13 +59,13 @@ export default function Todo() {
 
     const saveLocalStorage = () => {
         let listTodoLocal = JSON.stringify([...listTodo]);
-        localStorage.setItem('listTodoTodo', listTodoLocal);
+        localStorage.setItem('listTodo', listTodoLocal);
     }
 
     const getLocalStorage = () => {
-        if (localStorage.getItem('listTodoTodo')) {
+        if (localStorage.getItem('listTodo')) {
             let listTodoNew = [...listTodo];
-            listTodoNew = JSON.parse(localStorage.getItem('listTodoTodo'));
+            listTodoNew = JSON.parse(localStorage.getItem('listTodo'));
             setListTodo(listTodoNew);
         }
     }
@@ -73,7 +74,6 @@ export default function Todo() {
     useEffect(() => {
         getLocalStorage()
     }, []);
-
 
     //goi lai khi listTodo thay doi de luu vao LocalStorage
     useEffect(() => {
