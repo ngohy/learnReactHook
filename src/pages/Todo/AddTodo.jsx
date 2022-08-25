@@ -1,7 +1,6 @@
 import React, { memo } from 'react'
 
  function AddTodo({todo, handleChange ,handleAddTodo}) {
-    console.log(123);
     return (
         <div className='row py-4 mx-2'>
             <div className='col-4'>
