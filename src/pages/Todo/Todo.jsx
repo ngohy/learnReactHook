@@ -23,18 +23,17 @@ export default function Todo() {
 
     const handleAddTodo = useCallback(() => {
         let listTodoNew = [...listTodo];
-        if (todo.description !== '' || todo.nameTask !== '') {
-            listTodoNew.push(todo);
-            setListTodo(listTodoNew);
-            setTodo(
-                {
-                    id: 1,
-                    isChecked: false,
-                    'nameTask': '',
-                    'description': '',
-                }
-            )
-        }
+        if (todo.description === '' || todo.nameTask === '') return;
+        listTodoNew.push(todo);
+        setListTodo(listTodoNew);
+        setTodo(
+            {
+                id: 1,
+                isChecked: false,
+                'nameTask': '',
+                'description': '',
+            }
+        )
     }, [todo]);
 
     const handleDeleteTodo = (id) => {
