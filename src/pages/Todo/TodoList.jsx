@@ -1,25 +1,41 @@
 import React, { memo } from 'react'
 
-function TodoList({ listTodo, handleDeleteTodo,handleComplete }) {
+function TodoList({ listTodo, handleDeleteTodo, handleComplete,handleEdit }) {
     return (
         <div>
             <div style={{ height: '10px', background: '#fff' }} className='w-100'></div>
             <ul className='mx-2' >
                 {listTodo.map((todo) => {
                     return <li className="row p-0 m-0 border-bottom" key={todo.id}>
-                        <div className="col-8 p-0">
-                            <h4>{todo.nameTask}</h4>
-                            <p>{todo.description}</p>
+                        <div className="col-10 pt-2">
+                            <h4 className='m-0'>{todo.nameTask}</h4>
+                            <p className='mb-2'>{todo.description}</p>
                         </div>
-                        <div className="col-4 p-0 mt-4">
-                            <button className={todo.isChecked ? 'btn me-2 btn-success' : 'btn me-2'}
+                        <div className="col-2 p-0 mt-3">
+                            <button
+                                className={todo.isCheckedComplete ? 'me-2 btn-success border-0' : 'me-2 border-0'}
                                 onClick={() => {
-                                    handleComplete(todo.id,todo.isChecked);
-                                }}>Complete</button>
-                            <button className="btn btn-danger"
+                                    handleComplete(todo.id, todo.isCheckedComplete);
+                                }}>
+                                <i className="fas fa-check"></i>
+                            </button>
+
+                            <button
+                                className='text-dark me-2 border-0'
+                                onClick={() => {
+                                    handleEdit(todo.id);
+                                }}>
+                                <i className="fas fa-edit "></i>
+                            </button>
+
+                            <button
+                                className="text-danger  border-0"
                                 onClick={() => {
                                     handleDeleteTodo(todo.id)
-                                }}>Delete</button>
+                                }}>
+                                <i className="fas fa-calendar-times"></i>
+                            </button>
+
                         </div>
                     </li>
                 })}

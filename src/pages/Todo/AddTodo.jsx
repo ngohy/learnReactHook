@@ -1,9 +1,10 @@
 import React, { memo } from 'react'
 
- function AddTodo({todo, handleChange ,handleAddTodo}) {
+function AddTodo({ todo, handleChange, handleAddTodo, handleUpdateTodo }) {
+
     return (
         <div className='row py-4 mx-2'>
-            <div className='col-4'>
+            <div className='col-5'>
                 <label>Name Task</label>
                 <input
                     type="text"
@@ -13,7 +14,7 @@ import React, { memo } from 'react'
                     onChange={handleChange}
                 />
             </div>
-            <div className='col-5'>
+            <div className='col-7'>
                 <label>Description</label>
                 <input
                     type="text"
@@ -23,11 +24,18 @@ import React, { memo } from 'react'
                     onChange={handleChange}
                 />
             </div>
-            <div className='col-3'>
-                <button 
-                className="btn btn-warning mt-4"
-                onClick={()=>{handleAddTodo()}}
-                >Add Todo</button>
+            <div className='col-12'>
+                <button
+                    className="btn btn-warning mt-4 me-2"
+                    disabled={todo.edit ? true : false}
+                    onClick={handleAddTodo}
+                >Add todo</button>
+                <button
+                    className="btn btn-warning mt-4"
+                    disabled={todo.edit ? false : true}
+                    onClick={() => { handleUpdateTodo(todo) }}
+                >Update todo</button>
+
             </div>
         </div>
     )
