@@ -20,9 +20,9 @@ export default function HeaderHome(props) {
       <div className="collapse navbar-collapse" id="collapsibleNavId">
         <ul className="navbar-nav me-auto mt-2 mt-lg-0">
           <li className="nav-item active">
-            <a className="nav-link" href="#">
+            <NavLink className="nav-link" to="/home">
               Home <span className="visually-hidden">(current)</span>
-            </a>
+            </NavLink>
           </li>
           <li className="nav-item">
             <NavLink className="nav-link" to="/todo">
@@ -78,6 +78,26 @@ export default function HeaderHome(props) {
               </NavLink>
               <NavLink className="dropdown-item" to="/usereduxfaceapp">
                 Redux Demo Face App
+              </NavLink>
+            </div>
+          </li>
+          <li className="nav-item dropdown">
+            <a
+              className="nav-link dropdown-toggle"
+              href="#"
+              id="dropdownId"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Custom hook
+            </a>
+            <div className="dropdown-menu" aria-labelledby="dropdownId">
+              <NavLink className="dropdown-item" to="/customhook">
+                use Cookie
+              </NavLink>
+              <NavLink className="dropdown-item" to="/demoanimation">
+                animation
               </NavLink>
             </div>
           </li>

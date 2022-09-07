@@ -16,6 +16,10 @@ import UseRefDemo from './pages/HooksDemo/UseRefDemo/UseRefDemo';
 import { store } from './Redux/configStore';
 import DemoNumber from './pages/UseRedux/DemoNumber';
 import { DemoFaceApp } from './pages/UseRedux/DemoFaceApp/DemoFaceApp';
+import DemoUseRoute from './pages/customHooks/DemoUseRoute';
+import DemoAnimation from './pages/demoAnimation/DemoAnimation';
+import Product from './pages/product/Product';
+import DetailProduct from './pages/product/DetailProduct';
 
 
 
@@ -33,6 +37,14 @@ root.render(
           <Route path='useredux' element={<DemoNumber />}></Route>
           <Route path='usereduxfaceapp' element={<DemoFaceApp />}></Route>
           <Route path='todo' element={<Todo />}></Route>
+          <Route path='customhook' element={<DemoUseRoute />}></Route>
+          <Route path='demoanimation' element={<DemoAnimation />}></Route>
+          <Route path='home' element={<Product />}></Route>
+          <Route path='detail'>
+            <Route path=':id' element={<DetailProduct />}></Route>
+          </Route>
+
+
         </Route>
       </Routes>
     </BrowserRouter>
