@@ -1,13 +1,18 @@
 //rfc
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 export default function HeaderHome(props) {
+
+  const { userLogin } = useSelector(state => state.userReducer);
+  
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
       <NavLink className="navbar-brand" to="/">
         React hook
       </NavLink>
+
       <button
         className="navbar-toggler d-lg-none"
         type="button"
@@ -23,6 +28,12 @@ export default function HeaderHome(props) {
             <NavLink className="nav-link" to="/home">
               Home <span className="visually-hidden">(current)</span>
             </NavLink>
+          </li>
+          <li className="nav-item active">
+            {userLogin !== null ? <NavLink className="nav-link" to="/profile">
+              HeLLo ! {userLogin.email} </NavLink>
+              : <NavLink className="nav-link" to="/login"> Login </NavLink>
+            }
           </li>
           <li className="nav-item">
             <NavLink className="nav-link" to="/todo">

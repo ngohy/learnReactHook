@@ -24,11 +24,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import faceReducer from './reducers/faceReducer';
 import numberReducer from './reducers/numberReducer';
 import productReducer from './reducers/productReducer';
+import userReducer from './reducers/userReducer';
 
 export const store = configureStore({
     reducer: {
         number: numberReducer,
         faceReducer: faceReducer,
         productReducer: productReducer,
+        userReducer: userReducer
     }
 })

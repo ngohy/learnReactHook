@@ -20,6 +20,8 @@ import DemoUseRoute from './pages/customHooks/DemoUseRoute';
 import DemoAnimation from './pages/demoAnimation/DemoAnimation';
 import Product from './pages/product/Product';
 import DetailProduct from './pages/product/DetailProduct';
+import Login from './pages/login/Login';
+import Profile from './pages/login/Profile';
 
 
 
@@ -43,6 +45,8 @@ root.render(
           <Route path='detail'>
             <Route path=':id' element={<DetailProduct />}></Route>
           </Route>
+          <Route path='login' element={<Login />}></Route>
+          <Route path='profile' element={<Profile />}></Route>
 
 
         </Route>
