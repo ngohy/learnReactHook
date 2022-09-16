@@ -1,14 +1,15 @@
 import moment from 'moment/moment';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { history } from '../../index';
 import { getProfileApi } from '../../Redux/reducers/userReducer';
 
 export default function Profile() {
     const { userLogin } = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
-
+    
     const renderOrderHistory = () => {
-        return userLogin.ordersHistory?.map((order, index) => {
+        return userLogin?.ordersHistory?.map((order, index) => {
             return <div key={index}>
                 <h3>Order Detail {moment(order.date).format('DD/MM/YYYY hh:mm:ss A')}</h3>
                 <table className='table'>
@@ -23,7 +24,7 @@ export default function Profile() {
                         </tr>
                     </thead>
                     <tbody>
-                        {order.orderDetail.map((item, index) => {
+                        {order?.orderDetail?.map((item, index) => {
                             return <tr key={index}>
                                 <td>{item.id}</td>
                                 <td>{item.name}</td>
@@ -44,6 +45,11 @@ export default function Profile() {
     useEffect(() => {
         const action = getProfileApi();
         dispatch(action);
+        setTimeout(()=>{
+             if(userLogin == null){
+                history.push('/home')
+             }
+        },0)
     }, [])
 
     return (
@@ -52,9 +58,9 @@ export default function Profile() {
             <div className="d-flex">
                 <div className="w-25 me-5">
                     <div className="mt-2">
-                        <img className="w-100" src={userLogin.avatar} alt='...' />
-                        <p>email: {userLogin.email}</p>
-                        <p>name: {userLogin.name}</p>
+                        <img className="w-100" src={userLogin?.avatar} alt='...' />
+                        <p>email: {userLogin?.email}</p>
+                        <p>name: {userLogin?.name}</p>
                     </div>
                 </div>
                 <div className="w-75">

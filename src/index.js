@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 //Cấu hình browser router
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import UseStateDemo from './pages/HooksDemo/UseStateDemo/UseStateDemo';
@@ -23,12 +23,21 @@ import DetailProduct from './pages/product/DetailProduct';
 import Login from './pages/login/Login';
 import Profile from './pages/login/Profile';
 
+//tao ra 1 bien de quan ly chuyen huong
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import { createBrowserHistory } from 'history';
+import DemoHoc from './pages/demoHoc/DemoHoc';
+import AdminTemplate from './templates/AdminTemplate';
+import JobManager from './pages/Admin/JobManager/JobManager';
+import ProductManager from './pages/Admin/ProductManager/ProductManager';
+export const history = createBrowserHistory({ window });
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
+    {/* thay BrowserRouter thanh historyRouter */}
+    <HistoryRouter history={history}>
       <Routes>
         <Route path='' element={<App />}>
           <Route path='usestate' element={<UseStateDemo />}></Route>
@@ -47,11 +56,16 @@ root.render(
           </Route>
           <Route path='login' element={<Login />}></Route>
           <Route path='profile' element={<Profile />}></Route>
+          <Route path='demohoc' element={<DemoHoc />}></Route>
 
 
+
+          <Route path='*' element={<Navigate to={'/'} />} />
         </Route>
+        <Route path='job' element={<AdminTemplate Component={<JobManager />} />} ></Route>
+        <Route path='product' element={<AdminTemplate Component={<ProductManager />} />} ></Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   </Provider>
 );
 

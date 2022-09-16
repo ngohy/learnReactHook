@@ -2,11 +2,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { ACCESS_TOKEN, clearCookie, clearLocalStorage, USER_LOGIN } from "../../util/config";
 
 export default function HeaderHome(props) {
 
   const { userLogin } = useSelector(state => state.userReducer);
-  
+
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
       <NavLink className="navbar-brand" to="/">
@@ -29,15 +30,37 @@ export default function HeaderHome(props) {
               Home <span className="visually-hidden">(current)</span>
             </NavLink>
           </li>
-          <li className="nav-item active">
-            {userLogin !== null ? <NavLink className="nav-link" to="/profile">
-              HeLLo ! {userLogin.email} </NavLink>
-              : <NavLink className="nav-link" to="/login"> Login </NavLink>
-            }
-          </li>
+          {userLogin !== null ?
+            <>
+              <li className="nav-item active">
+                <NavLink className="nav-link " to="/profile">
+                  HeLLo ! {userLogin.email}
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <span className="nav-link"
+                 style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    clearLocalStorage(USER_LOGIN)
+                    clearLocalStorage(ACCESS_TOKEN)
+                    clearCookie(USER_LOGIN);
+                    //reload lai trang
+                    window.location.reload();
+                  }}>Dang xuat</span>
+              </li>
+            </>
+            : <NavLink className="nav-link" to="/login">
+              Login
+            </NavLink>
+          }
           <li className="nav-item">
             <NavLink className="nav-link" to="/todo">
               TodoList
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/demohoc">
+              HOC
             </NavLink>
           </li>
           <li className="nav-item dropdown">

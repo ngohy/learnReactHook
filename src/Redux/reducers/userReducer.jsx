@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
-import { ACCESS_TOKEN, getStore, getStoreJSON, setCookie, setStore, setStoreJSON, USER_LOGIN } from '../../util/config';
+import { history } from '../../index';
+import { ACCESS_TOKEN, getStore, getStoreJSON, http, setCookie, setStore, setStoreJSON, USER_LOGIN} from '../../util/config';
 
 const initialState = {
     userLogin: getStoreJSON(USER_LOGIN)
@@ -46,9 +47,11 @@ export const signInApi = (userLogin) => {
             // dua len userLogin thanh cong len reducer
             const action = setUserLogin(result.data.content);
             dispatch(action);
-
+            history.push('/profile');
         } catch (err) {
             console.log(err)
+            alert('dăng nhap sai')
+            history.push('/login')
         }
     }
 }
@@ -56,19 +59,13 @@ export const signInApi = (userLogin) => {
 export const getProfileApi = () => {
     return async dispatch => {
         try {
-            let result = await axios({
-                url: 'https://shop.cyberlearn.vn/api/Users/getProfile',
-                method: 'POSt',
-                headers: {
-                    Authorization: `Bearer ${getStore(ACCESS_TOKEN)}`
-                }
-            })
+            let result = await http.post('/Users/getProfile')
             console.log('ket qua', result.data.content);
             const action= setUserLogin(result.data.content);
             dispatch(action);
-
         } catch (err) {
             console.log(err);
+            
         }
     }
 }
